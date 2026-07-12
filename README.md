@@ -8,7 +8,7 @@ A browser BIM coordination viewer: a procedurally generated four-storey building
 place the services run into the structure — the classic clash review, entirely
 client-side.
 
-> **Live demo:** <https://bim-clash-viewer.vercel.app> · no backend, no login
+> **Live demo:** <https://girder.vitaliipopov.dev> · no backend, no login
 
 ## What it shows
 
