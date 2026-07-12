@@ -1,0 +1,28 @@
+{
+  "name": "bim-clash-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Girder — a browser BIM viewer with clash detection: procedural building model, three.js scene, and a pure, unit-tested clash engine.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test \"src/**/*.test.ts\""
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.170.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.0"
+  }
+}
