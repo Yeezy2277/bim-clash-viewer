@@ -86,7 +86,7 @@ export default function App() {
           </span>
           <button className="btn" onClick={resetView}>⌂ Reset view</button>
           <button
-            className="btn"
+            className="btn btn--icon"
             onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
             aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
           >
