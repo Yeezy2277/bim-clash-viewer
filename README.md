@@ -1,6 +1,7 @@
 # Girder — BIM clash viewer
 
 [![CI](https://github.com/Yeezy2277/bim-clash-viewer/actions/workflows/ci.yml/badge.svg)](https://github.com/Yeezy2277/bim-clash-viewer/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/Yeezy2277/bim-clash-viewer/actions/workflows/codeql.yml/badge.svg)](https://github.com/Yeezy2277/bim-clash-viewer/actions/workflows/codeql.yml)
 
 A browser BIM coordination viewer: a procedurally generated four-storey building
 (structural frame, architecture envelope, MEP services) rendered with
