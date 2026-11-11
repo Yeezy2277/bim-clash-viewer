@@ -31,7 +31,7 @@ export function TreePanel({
 
   return (
     <div className="tree">
-      <div className="panel__title">Model</div>
+      <h2 className="panel__title">Model</h2>
       {DISCIPLINES.map((d) => {
         const types = groups.get(d) ?? new Map();
         const total = [...types.values()].reduce((n, c) => n + c, 0);

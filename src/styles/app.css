@@ -6,7 +6,7 @@
   --border: #232c38;
   --text: #e6edf3;
   --muted: #9aa7b4;
-  --dim: #6b7787;
+  --dim: #8a96a4;
   --accent: #4c8dff;
   --ok: #2dd4a0;
   --warn: #f5b544;
@@ -21,10 +21,10 @@
   --border: #dde3ec;
   --text: #17202b;
   --muted: #5d6a79;
-  --dim: #8a95a3;
+  --dim: #5f6b78;
   --accent: #2f6fe4;
   --ok: #12a97f;
-  --warn: #b97a10;
+  --warn: #8f5d00;
   --bad: #c43c31;
   color-scheme: light;
 }
@@ -189,7 +189,8 @@ body {
 
 .panel__badge {
   background: color-mix(in srgb, var(--bad) 18%, transparent);
-  color: var(--bad);
+  color: var(--text);
+  border: 1px solid var(--bad);
   border-radius: 999px;
   padding: 1px 9px;
   font-size: 0.72rem;
@@ -453,4 +454,98 @@ body {
     width: 100%;
     justify-content: space-between;
   }
+}
+
+/* ---- coordination tools ---- */
+.panel__title {
+  margin-top: 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.clash__dot--clearance {
+  background: transparent;
+  border: 2px solid var(--warn);
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.chip {
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.clash-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.select {
+  width: 100%;
+  margin-top: 8px;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 6px 8px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.clashes__empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.clashes__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.clashes__keys {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+kbd {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.72rem;
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+}
+.fallback {
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  height: 100%;
+  min-height: 260px;
+  padding: 24px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.hdr__title {
+  margin: 0;
 }
