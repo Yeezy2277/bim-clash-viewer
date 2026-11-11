@@ -1,6 +1,6 @@
-import { test } from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
-import { intersectAABB, aabbVolume, detectClashes, DEFAULT_TOLERANCE } from "./clash.ts";
+import { intersectAABB, aabbVolume, aabbGap, detectClashes, DEFAULT_TOLERANCE } from "./clash.ts";
 import type { AABB, BimElement } from "./types.ts";
 
 const el = (
@@ -75,4 +75,51 @@ test("detectClashes: far-apart floors are pre-filtered out", () => {
     el("pipe", "mep", [1, 0, 0], [2, 1, 1], 3),
   ];
   assert.equal(detectClashes(elements).length, 0);
+});
+
+test("aabbGap is 0 for touching or overlapping boxes and euclidean otherwise", () => {
+  const unit: AABB = { min: [0, 0, 0], max: [1, 1, 1] };
+  assert.equal(aabbGap(unit, { min: [0.5, 0.5, 0.5], max: [2, 2, 2] }), 0);
+  assert.equal(aabbGap(unit, { min: [1, 0, 0], max: [2, 1, 1] }), 0);
+  assert.equal(aabbGap(unit, { min: [1.3, 0, 0], max: [2, 1, 1] }).toFixed(3), "0.300");
+  assert.equal(aabbGap(unit, { min: [1.3, 1.4, 0], max: [2, 2, 1] }).toFixed(3), "0.500");
+});
+
+test("clearance clashes: reported only under the required gap, after hard clashes, tightest first", () => {
+  const el = (id: string, discipline: BimElement["discipline"], min: [number, number, number], max: [number, number, number]): BimElement => ({
+    id,
+    name: id,
+    discipline,
+    type: discipline === "mep" ? "pipe" : "beam",
+    floor: 0,
+    box: { min, max },
+  });
+  const elements = [
+    el("beam", "structural", [0, 0, 0], [10, 1, 1]),
+    el("pipe-hard", "mep", [2, 0.5, 0], [3, 1.5, 1]), // overlaps
+    el("pipe-20mm", "mep", [4, 1.02, 0], [5, 2, 1]), // 20 mm above
+    el("pipe-40mm", "mep", [6, 1.04, 0], [7, 2, 1]), // 40 mm above
+    el("pipe-80mm", "mep", [8, 1.08, 0], [9, 2, 1]), // 80 mm above
+  ];
+
+  assert.deepEqual(detectClashes(elements).map((c) => c.b.id), ["pipe-hard"]);
+
+  const at50 = detectClashes(elements, { clearance: 0.05 });
+  assert.deepEqual(at50.map((c) => [c.kind, c.b.id]), [
+    ["hard", "pipe-hard"],
+    ["clearance", "pipe-20mm"],
+    ["clearance", "pipe-40mm"],
+  ]);
+  const tight = at50[1]!;
+  assert.equal(tight.volume, 0);
+  assert.equal(tight.gap.toFixed(3), "0.020");
+  assert.ok(tight.center[1] > 1 && tight.center[1] < 1.02);
+});
+
+test("a gap exactly at the required clearance passes despite float rounding", () => {
+  // 0.1 + 0.2 style rounding: the boxes are exactly 100 mm apart on paper.
+  const beam: BimElement = { id: "b", name: "b", discipline: "structural", type: "beam", floor: 0, box: { min: [0, 0, 0], max: [1, 0.7, 1] } };
+  const duct: BimElement = { id: "d", name: "d", discipline: "mep", type: "duct", floor: 0, box: { min: [0, 0.1 + 0.7 - 0.000000000000001, 0], max: [1, 1.2, 1] } };
+  assert.equal(detectClashes([beam, duct], { clearance: 0.1 }).length, 0);
+  assert.equal(detectClashes([beam, duct], { clearance: 0.15 }).length, 1);
 });

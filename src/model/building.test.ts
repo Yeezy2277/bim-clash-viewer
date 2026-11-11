@@ -1,4 +1,4 @@
-import { test } from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
 import { generateBuilding, PLANTED_CLASH_ELEMENTS, FLOORS } from "./building.ts";
 import { detectClashes } from "./clash.ts";
