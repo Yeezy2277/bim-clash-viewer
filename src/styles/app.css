@@ -1,32 +1,52 @@
+/*
+ * Girder identity: a coordination drawing.
+ *   Type    Barlow Condensed (display, labels: the lettering of a title block)
+ *           + IBM Plex Mono (data, element names, quantities).
+ *   Dark    blueprint: deep cyanotype blue, chalk-white linework.
+ *   Light   site documentation: drafting vellum with blue ink.
+ *   Accent  safety orange marks clashes and the selected item; red stays
+ *           reserved for severe hard clashes, green for "coordinated".
+ *   Detail  a drawing title block as the footer, registration marks on the
+ *           viewport corners, a drafting grid behind everything.
+ */
 :root,
 :root[data-theme="dark"] {
-  --bg: #0b0f16;
-  --panel: #12171f;
-  --panel-2: #171e28;
-  --border: #232c38;
-  --text: #e6edf3;
-  --muted: #9aa7b4;
-  --dim: #8a96a4;
-  --accent: #4c8dff;
-  --ok: #2dd4a0;
-  --warn: #f5b544;
-  --bad: #e2564a;
+  --bg: #0a2342;
+  --panel: #0d2b50;
+  --panel-2: #10335d;
+  --border: #2f5784;
+  --line: rgba(143, 211, 255, 0.1);
+  --text: #e6efff;
+  --muted: #a9bfdc;
+  --dim: #a3badb;
+  --accent: #8fd3ff;
+  --mark: #ff8a3d;
+  --ok: #5be0a6;
+  --warn: #ff8a3d;
+  --bad: #ff6b6b;
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --bg: #f4f6fa;
-  --panel: #ffffff;
-  --panel-2: #eef1f6;
-  --border: #dde3ec;
-  --text: #17202b;
-  --muted: #5d6a79;
-  --dim: #5f6b78;
-  --accent: #2f6fe4;
-  --ok: #12a97f;
-  --warn: #8f5d00;
-  --bad: #c43c31;
+  --bg: #f3f1ea;
+  --panel: #fbfaf6;
+  --panel-2: #eeebe2;
+  --border: #b9c4d3;
+  --line: rgba(29, 78, 137, 0.08);
+  --text: #102a4c;
+  --muted: #3f5675;
+  --dim: #4e6482;
+  --accent: #1d4e89;
+  --mark: #b4500a;
+  --ok: #11724a;
+  --warn: #a8480a;
+  --bad: #b42318;
   color-scheme: light;
+}
+
+:root {
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 
 * {
@@ -548,4 +568,235 @@ kbd {
 
 .hdr__title {
   margin: 0;
+}
+
+
+/* =====================================================================
+   Blueprint layer: overrides the base layout styles above.
+   ===================================================================== */
+body {
+  font-family: var(--mono);
+  font-size: 14px;
+  /* Drafting grid: 5 m major lines over 1 m minor lines, at drawing scale. */
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mark);
+  outline-offset: 2px;
+}
+
+.hdr__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  background: transparent;
+  border: 2px solid var(--text);
+  color: var(--text);
+  font: 800 22px/1 var(--display);
+}
+
+.hdr__title {
+  font: 800 2.1rem/0.9 var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hdr__sub {
+  font: 500 0.7rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.hdr__pill,
+.btn,
+.chip,
+.select,
+.panel,
+.clash__body,
+.clash__status {
+  border-radius: 0;
+}
+
+.hdr__pill {
+  font: 500 0.74rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.btn {
+  font: 700 0.86rem var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: transparent;
+}
+
+.btn:hover {
+  border-color: var(--mark);
+  color: var(--mark);
+}
+
+.panel {
+  background: var(--panel);
+}
+
+.panel__title {
+  font: 700 0.95rem var(--display);
+  letter-spacing: 0.14em;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.panel__badge {
+  border-radius: 0;
+  font-family: var(--mono);
+  letter-spacing: 0;
+}
+
+.chip {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--mark);
+  color: var(--text);
+  background: color-mix(in srgb, var(--mark) 18%, transparent);
+}
+
+.clash--selected .clash__body {
+  border-color: var(--mark);
+  box-shadow: inset 3px 0 0 var(--mark);
+}
+
+.clash__dot {
+  border-radius: 0;
+  transform: rotate(45deg);
+  background: var(--mark);
+}
+
+.clash__dot--severe {
+  background: var(--bad);
+}
+
+.clash__dot--clearance {
+  background: transparent;
+  border: 2px solid var(--mark);
+}
+
+.clash__names b {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Registration marks on the viewport corners, like a plotted sheet. */
+.stage {
+  position: relative;
+}
+
+.stage::before,
+.stage::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.stage::before {
+  top: 8px;
+  left: 8px;
+  border-top: 2px solid var(--mark);
+  border-left: 2px solid var(--mark);
+}
+
+.stage::after {
+  right: 8px;
+  bottom: 8px;
+  border-right: 2px solid var(--mark);
+  border-bottom: 2px solid var(--mark);
+}
+
+.stage__hint {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 0;
+}
+
+/* Footer as a drawing title block. */
+.titleblock {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, minmax(0, 1fr));
+  border: 2px solid var(--text);
+  background: var(--panel);
+}
+
+.titleblock > div {
+  padding: 6px 10px;
+  border-left: 1px solid var(--border);
+  min-width: 0;
+}
+
+.titleblock > div:first-child {
+  border-left: 0;
+}
+
+.titleblock dt {
+  font: 500 0.62rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.titleblock dd {
+  margin: 2px 0 0;
+  font: 700 1rem/1.15 var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+}
+
+.titleblock .tb-open {
+  color: var(--mark);
+}
+
+@media (max-width: 760px) {
+  .titleblock {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .titleblock > div {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .titleblock > div:first-child {
+    grid-column: 1 / -1;
+    border-top: 0;
+  }
+}
+
+.tree__swatch {
+  border-radius: 0;
+  outline: 1px solid var(--border);
+}
+.tree__name {
+  font: 700 1rem var(--display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.viewer,
+.viewer__canvas {
+  border-radius: 0;
 }

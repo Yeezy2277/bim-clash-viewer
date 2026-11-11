@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { generateBuilding, FLOORS, STOREY } from "./model/building";
 import { detectClashes, type Clash } from "./model/clash";
 import { clashReportCsv, type ClashStatus } from "./model/report";
-import { DISCIPLINE_LABEL, type Discipline } from "./model/types";
+import type { Discipline } from "./model/types";
 import { BimScene } from "./viewer/scene";
 import { Viewer } from "./components/Viewer";
 import { TreePanel } from "./components/TreePanel";
@@ -208,15 +208,33 @@ export default function App() {
         </aside>
       </div>
 
-      <footer className="ftr">
-        <span>
-          {elements.length} elements · {Object.values(DISCIPLINE_LABEL).join(" / ")} ·{" "}
-          {clashes.filter((c) => c.kind === "hard").length} hard ·{" "}
-          {clashes.filter((c) => c.kind === "clearance").length} clearance clashes
-        </span>
-        <span className="ftr__dim">
-          procedural model · pure clash engine (unit-tested) · three.js · no backend
-        </span>
+      {/* The footer is the drawing's title block: what this sheet is and its state. */}
+      <footer>
+        <dl className="titleblock">
+          <div>
+            <dt>Project</dt>
+            <dd>Girder · 4-storey frame</dd>
+          </div>
+          <div>
+            <dt>Sheet</dt>
+            <dd>C-101 Coordination</dd>
+          </div>
+          <div>
+            <dt>Model</dt>
+            <dd>{elements.length} elements</dd>
+          </div>
+          <div>
+            <dt>Clashes</dt>
+            <dd>
+              {clashes.filter((c) => c.kind === "hard").length} hard · {clashes.filter((c) => c.kind === "clearance").length}{" "}
+              clear.
+            </dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd className={openCount > 0 ? "tb-open" : undefined}>{openCount > 0 ? `${openCount} open` : "Coordinated"}</dd>
+          </div>
+        </dl>
       </footer>
     </div>
   );

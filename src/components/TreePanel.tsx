@@ -4,9 +4,9 @@ import { DISCIPLINE_LABEL, type BimElement, type Discipline } from "../model/typ
 const DISCIPLINES: Discipline[] = ["structural", "architecture", "mep"];
 
 const SWATCH: Record<Discipline, string> = {
-  structural: "#9aa5b1",
-  architecture: "#d7dde6",
-  mep: "#2f9e77",
+  structural: "#c9d6e8",
+  architecture: "#e8f0ff",
+  mep: "#3fc6a4",
 };
 
 /** Model browser: disciplines with visibility toggles and per-type counts. */
@@ -39,7 +39,7 @@ export function TreePanel({
           <div key={d} className="tree__group">
             <label className="tree__head">
               <input type="checkbox" checked={visible[d]} onChange={() => onToggle(d)} />
-              <i className="tree__swatch" style={{ background: SWATCH[d] }} />
+              <i className="tree__swatch" style={{ background: SWATCH[d] }} aria-hidden="true" />
               <span className="tree__name">{DISCIPLINE_LABEL[d]}</span>
               <span className="tree__count">{total}</span>
             </label>
