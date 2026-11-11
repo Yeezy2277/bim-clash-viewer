@@ -10,15 +10,22 @@ import { SIZE_X, SIZE_Z, FLOORS, STOREY } from "../model/building";
  * top of an embedded 3D component: the host owns the scene, the UI calls in.
  */
 
+// Blueprint palette: structure in chalk, architecture as glass, services in
+// the colours a coordination drawing uses; clashes in safety orange and red.
 const DISCIPLINE_MATERIAL: Record<Discipline, { color: number; opacity: number }> = {
-  structural: { color: 0x9aa5b1, opacity: 1 },
-  architecture: { color: 0xd7dde6, opacity: 0.28 },
-  mep: { color: 0x2f9e77, opacity: 1 },
+  structural: { color: 0xc9d6e8, opacity: 1 },
+  architecture: { color: 0xe8f0ff, opacity: 0.22 },
+  mep: { color: 0x3fc6a4, opacity: 1 },
 };
 
-const MEP_DUCT_COLOR = 0x4c8dff;
-const CLASH_A = 0xe2564a; // structural/arch side
-const CLASH_B = 0xf5b544; // mep side
+const MEP_DUCT_COLOR = 0x7fb8ff;
+const CLASH_A = 0xff4d4d; // structural/arch side
+const CLASH_B = 0xff8a3d; // mep side
+
+const THEME = {
+  dark: { clear: 0x0a2342, gridMajor: 0x3d6797, gridMinor: 0x173a64 },
+  light: { clear: 0xf3f1ea, gridMajor: 0x9fb3cc, gridMinor: 0xd9dfe7 },
+};
 
 type Handles = {
   mesh: THREE.Mesh;
@@ -63,8 +70,7 @@ export class BimScene {
     dir.position.set(30, 50, 20);
     this.scene.add(dir);
 
-    this.grid = new THREE.GridHelper(90, 45, 0x2a3442, 0x1c2430);
-    this.grid.position.set(SIZE_X / 2, -0.01, SIZE_Z / 2);
+    this.grid = this.makeGrid(false);
     this.scene.add(this.grid);
 
     const loop = () => {
@@ -83,9 +89,21 @@ export class BimScene {
     loop();
   }
 
+  /** GridHelper bakes its colours into vertices, so a theme change rebuilds it. */
+  private makeGrid(light: boolean) {
+    const t = light ? THEME.light : THEME.dark;
+    const grid = new THREE.GridHelper(90, 45, t.gridMajor, t.gridMinor);
+    grid.position.set(SIZE_X / 2, -0.01, SIZE_Z / 2);
+    return grid;
+  }
+
   setTheme(light: boolean) {
-    this.renderer.setClearColor(light ? 0xe9edf4 : 0x0c121a, 1);
-    (this.grid.material as THREE.Material & { color?: THREE.Color }).opacity = light ? 0.5 : 1;
+    this.renderer.setClearColor(light ? THEME.light.clear : THEME.dark.clear, 1);
+    this.scene.remove(this.grid);
+    this.grid.geometry.dispose();
+    (this.grid.material as THREE.Material).dispose();
+    this.grid = this.makeGrid(light);
+    this.scene.add(this.grid);
   }
 
   resize(width: number, height: number) {
@@ -128,7 +146,7 @@ export class BimScene {
       const edges = new THREE.LineSegments(
         new THREE.EdgesGeometry(geometry),
         new THREE.LineBasicMaterial({
-          color: 0x0b0f16,
+          color: 0x06162b,
           transparent: true,
           opacity: el.discipline === "architecture" ? 0.12 : 0.35,
           clippingPlanes: [this.clipPlane],
@@ -219,7 +237,7 @@ export class BimScene {
     const marker = new THREE.Mesh(
       new THREE.BoxGeometry(sx * 1.4, sy * 1.4, sz * 1.4),
       new THREE.MeshBasicMaterial({
-        color: 0xff3b30,
+        color: 0xff8a3d,
         transparent: true,
         opacity: 0.3,
         depthWrite: false,
