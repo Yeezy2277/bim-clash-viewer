@@ -17,6 +17,16 @@ client-side.
   intersects AABBs across discipline pairs (structure/architecture vs MEP) with
   a touch tolerance, returns overlap volume + centroid, severity-sorted. No
   three.js imports; pinned by [unit tests](src/model/clash.test.ts).
+- **Hard and clearance clashes** — besides overlaps, the engine reports
+  *clearance* (soft) clashes: MEP that sits closer to structure than a required
+  gap, the way coordination reviews flag a duct with no room for insulation or
+  access. Pick the requirement (0 / 100 / 150 / 200 mm); a gap exactly at the
+  limit passes despite float rounding (a bug the tests caught).
+- **A review queue, not just a list** — filter by kind and open/reviewed, step
+  through with <kbd>J</kbd>/<kbd>K</kbd> (the camera follows), mark items
+  reviewed, and export the filtered report as CSV for the site team's tracker
+  (quoted, formula-injection-safe). Without WebGL the report still works and the
+  3D view explains why it's missing.
 - **Deterministic model as code** — [`src/model/building.ts`](src/model/building.ts)
   generates the building from grid constants and deliberately mis-routes three
   MEP runs (duct at beam elevation, pipe through a column line, pipe clipping a
@@ -37,7 +47,7 @@ client-side.
 ```bash
 npm install
 npm run dev        # vite dev server
-npm test           # clash engine + model generator (node --test)
+npm test           # Vitest: clash engine, report, model generator + RTL tests of the review flow
 npm run build      # tsc + vite
 ```
 
