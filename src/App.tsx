@@ -8,6 +8,7 @@ import { Viewer } from "./components/Viewer";
 import { TreePanel } from "./components/TreePanel";
 import { ClashPanel, type KindFilter } from "./components/ClashPanel";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { Icon } from "./components/Icon";
 
 type Theme = "dark" | "light";
 
@@ -109,7 +110,7 @@ export default function App() {
     <div className="app">
       <header className="hdr">
         <div className="hdr__brand">
-          <span className="hdr__logo" aria-hidden="true">⌗</span>
+          <span className="hdr__logo" aria-hidden="true"><Icon name="ibeam" size={22} /></span>
           <div>
             <h1 className="hdr__title">Girder</h1>
             <div className="hdr__sub">BIM clash viewer</div>
@@ -121,14 +122,14 @@ export default function App() {
             {openCount > 0 ? `${openCount} open clash${openCount === 1 ? "" : "es"}` : "Model coordinated"}
           </span>
           <button className="btn" onClick={resetView}>
-            <span aria-hidden="true">⌂</span> Reset view
+            <Icon name="reset" size={14} /> Reset view
           </button>
           <button
             className="btn btn--icon"
             onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
             aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
           >
-            <span aria-hidden="true">{theme === "dark" ? "☀" : "☾"}</span>
+            <Icon name={theme === "dark" ? "sun" : "moon"} />
           </button>
         </div>
       </header>
@@ -183,7 +184,7 @@ export default function App() {
           <ErrorBoundary area="3D view">
             <Viewer sceneRef={sceneRef} elements={elements} theme={theme} />
           </ErrorBoundary>
-          <div className="stage__hint">drag to orbit · scroll to zoom · right-drag to pan</div>
+          <div className="stage__hint">drag to orbit, scroll to zoom, right-drag to pan</div>
         </main>
 
         <aside className="panel panel--clashes" aria-label="Clash report">
@@ -213,7 +214,7 @@ export default function App() {
         <dl className="titleblock">
           <div>
             <dt>Project</dt>
-            <dd>Girder · 4-storey frame</dd>
+            <dd>Girder, 4-storey frame</dd>
           </div>
           <div>
             <dt>Sheet</dt>
@@ -226,7 +227,7 @@ export default function App() {
           <div>
             <dt>Clashes</dt>
             <dd>
-              {clashes.filter((c) => c.kind === "hard").length} hard · {clashes.filter((c) => c.kind === "clearance").length}{" "}
+              {clashes.filter((c) => c.kind === "hard").length} hard, {clashes.filter((c) => c.kind === "clearance").length}{" "}
               clear.
             </dd>
           </div>

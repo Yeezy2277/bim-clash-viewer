@@ -59,7 +59,7 @@ export function generateBuilding(): BimElement[] {
     // --- structural: slab over this storey -----------------------------------
     out.push({
       id: `str-slab-f${f}`,
-      name: `Slab · level ${f + 1}`,
+      name: `Slab, level ${f + 1}`,
       discipline: "structural",
       type: "slab",
       floor: f,
@@ -71,7 +71,7 @@ export function generateBuilding(): BimElement[] {
       for (let j = 0; j <= BAYS_Z; j++) {
         out.push({
           id: `str-col-f${f}-${i}-${j}`,
-          name: `Column ${String.fromCharCode(65 + i)}${j + 1} · L${f + 1}`,
+          name: `Column ${String.fromCharCode(65 + i)}${j + 1}, L${f + 1}`,
           discipline: "structural",
           type: "column",
           floor: f,
@@ -85,7 +85,7 @@ export function generateBuilding(): BimElement[] {
     for (let j = 0; j <= BAYS_Z; j++) {
       out.push({
         id: `str-beam-x-f${f}-${j}`,
-        name: `Beam X${j + 1} · L${f + 1}`,
+        name: `Beam X${j + 1}, L${f + 1}`,
         discipline: "structural",
         type: "beam",
         floor: f,
@@ -95,7 +95,7 @@ export function generateBuilding(): BimElement[] {
     for (let i = 0; i <= BAYS_X; i++) {
       out.push({
         id: `str-beam-z-f${f}-${i}`,
-        name: `Beam ${String.fromCharCode(65 + i)} · L${f + 1}`,
+        name: `Beam ${String.fromCharCode(65 + i)}, L${f + 1}`,
         discipline: "structural",
         type: "beam",
         floor: f,
@@ -109,7 +109,7 @@ export function generateBuilding(): BimElement[] {
     out.push(
       {
         id: `arch-wall-n-f${f}`,
-        name: `Wall north · L${f + 1}`,
+        name: `Wall north, L${f + 1}`,
         discipline: "architecture",
         type: "wall",
         floor: f,
@@ -117,7 +117,7 @@ export function generateBuilding(): BimElement[] {
       },
       {
         id: `arch-wall-s-f${f}`,
-        name: `Wall south · L${f + 1}`,
+        name: `Wall south, L${f + 1}`,
         discipline: "architecture",
         type: "wall",
         floor: f,
@@ -125,7 +125,7 @@ export function generateBuilding(): BimElement[] {
       },
       {
         id: `arch-wall-w-f${f}`,
-        name: `Wall west · L${f + 1}`,
+        name: `Wall west, L${f + 1}`,
         discipline: "architecture",
         type: "wall",
         floor: f,
@@ -133,7 +133,7 @@ export function generateBuilding(): BimElement[] {
       },
       {
         id: `arch-wall-e-f${f}`,
-        name: `Wall east · L${f + 1}`,
+        name: `Wall east, L${f + 1}`,
         discipline: "architecture",
         type: "wall",
         floor: f,
@@ -145,7 +145,7 @@ export function generateBuilding(): BimElement[] {
     const serviceY = ceiling - BEAM_D - DUCT_H - 0.1; // safely under beam soffit
     out.push({
       id: `mep-duct-f${f}-main`,
-      name: `Supply duct main · L${f + 1}`,
+      name: `Supply duct main, L${f + 1}`,
       discipline: "mep",
       type: "duct",
       floor: f,
@@ -153,7 +153,7 @@ export function generateBuilding(): BimElement[] {
     });
     out.push({
       id: `mep-pipe-f${f}-riser-a`,
-      name: `Pipe run A · L${f + 1}`,
+      name: `Pipe run A, L${f + 1}`,
       discipline: "mep",
       type: "pipe",
       floor: f,
@@ -161,7 +161,7 @@ export function generateBuilding(): BimElement[] {
     });
     out.push({
       id: `mep-pipe-f${f}-riser-b`,
-      name: `Pipe run B · L${f + 1}`,
+      name: `Pipe run B, L${f + 1}`,
       discipline: "mep",
       type: "pipe",
       floor: f,
@@ -178,7 +178,7 @@ export function generateBuilding(): BimElement[] {
     const beamY = (f + 1) * STOREY - BEAM_D / 2;
     out.push({
       id: PLANTED_CLASH_ELEMENTS[0]!,
-      name: `Return duct branch · L${f + 1}`,
+      name: `Return duct branch, L${f + 1}`,
       discipline: "mep",
       type: "duct",
       floor: f,
@@ -193,7 +193,7 @@ export function generateBuilding(): BimElement[] {
     const y = f * STOREY + 1.6;
     out.push({
       id: PLANTED_CLASH_ELEMENTS[1]!,
-      name: `Chilled water pipe · L${f + 1}`,
+      name: `Chilled water pipe, L${f + 1}`,
       discipline: "mep",
       type: "pipe",
       floor: f,
@@ -207,7 +207,7 @@ export function generateBuilding(): BimElement[] {
     const beamY = (f + 1) * STOREY - BEAM_D / 2;
     out.push({
       id: PLANTED_CLASH_ELEMENTS[2]!,
-      name: `Condensate pipe · L${f + 1}`,
+      name: `Condensate pipe, L${f + 1}`,
       discipline: "mep",
       type: "pipe",
       floor: f,
