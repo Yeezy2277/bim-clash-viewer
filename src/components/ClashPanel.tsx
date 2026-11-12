@@ -1,5 +1,6 @@
 import type { Clash, ClashKind } from "../model/clash";
 import { severity, type ClashStatus } from "../model/report";
+import { Icon } from "./Icon";
 
 export type KindFilter = "all" | ClashKind;
 
@@ -86,7 +87,7 @@ export function ClashPanel({
                   aria-label={`Reviewed: ${clash.b.name} vs ${clash.a.name}`}
                   onClick={() => onToggleStatus(clash.id)}
                 >
-                  {status === "reviewed" ? "✓ reviewed" : "open"}
+                  {status === "reviewed" ? <><Icon name="check" size={13} /> reviewed</> : "open"}
                 </button>
               </li>
             );
