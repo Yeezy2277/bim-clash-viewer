@@ -183,7 +183,7 @@ export default function App() {
           <ErrorBoundary area="3D view">
             <Viewer sceneRef={sceneRef} elements={elements} theme={theme} />
           </ErrorBoundary>
-          <div className="stage__hint">drag to orbit · scroll to zoom · right-drag to pan</div>
+          <div className="stage__hint">drag to orbit, scroll to zoom, right-drag to pan</div>
         </main>
 
         <aside className="panel panel--clashes" aria-label="Clash report">
@@ -213,7 +213,7 @@ export default function App() {
         <dl className="titleblock">
           <div>
             <dt>Project</dt>
-            <dd>Girder · 4-storey frame</dd>
+            <dd>Girder, 4-storey frame</dd>
           </div>
           <div>
             <dt>Sheet</dt>
@@ -226,7 +226,7 @@ export default function App() {
           <div>
             <dt>Clashes</dt>
             <dd>
-              {clashes.filter((c) => c.kind === "hard").length} hard · {clashes.filter((c) => c.kind === "clearance").length}{" "}
+              {clashes.filter((c) => c.kind === "hard").length} hard, {clashes.filter((c) => c.kind === "clearance").length}{" "}
               clear.
             </dd>
           </div>
