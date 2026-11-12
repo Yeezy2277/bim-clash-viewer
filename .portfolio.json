@@ -1,7 +1,13 @@
 {
-  "title": "Girder — BIM clash viewer",
-  "summary": "A browser BIM coordination viewer: procedural building model, three.js scene with section plane and ghosted-context clash isolation, and a pure, unit-tested clash-detection engine. No backend.",
-  "tags": ["three.js", "BIM", "TypeScript", "React", "Computational geometry"],
+  "title": "Girder",
+  "summary": "A browser BIM coordination viewer. A procedural building renders in three.js with a section plane and ghosted clash isolation, and a pure, unit-tested engine finds hard and clearance clashes. Review them as a queue with J and K and export the report as CSV. No backend.",
+  "tags": [
+    "three.js",
+    "BIM",
+    "TypeScript",
+    "React",
+    "Computational geometry"
+  ],
   "embeddable": true,
   "featured": false,
   "order": 4
